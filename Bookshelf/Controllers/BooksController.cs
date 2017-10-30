@@ -18,6 +18,10 @@ namespace Bookshelf.Controllers
         public ActionResult Index()
         {
             var books = db.Books.Include(b => b.Category);
+
+            ViewBag.FavoriteFood = "Spaghetti";
+            ViewBag.FavoriteNumber = 17;
+
             return View(books.ToList());
         }
 
@@ -29,6 +33,16 @@ namespace Bookshelf.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             Book book = db.Books.Find(id);
+
+            if(book.Title.Contains("P"))
+            {
+                ViewBag.AlphabetSong = "P is for Pizza!";
+            }
+            else
+            {
+                ViewBag.AlphabetSong = "No P is for Pizza!";
+            }
+
             if (book == null)
             {
                 return HttpNotFound();
